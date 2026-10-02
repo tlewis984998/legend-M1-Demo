@@ -1,0 +1,11 @@
+{
+  "repo_notes": [{"content": "Parent repo of the FINOS Legend platform: docs site (website/), showcases, installers, and examples. examples/service-execution-jar is a standalone Java app that executes a Legend service; it currently targets Java 8."}],
+  "pages": [
+    {"title": "Repository overview", "purpose": "What lives where and how it relates to legend-engine, legend-studio and legend-sdlc"},
+    {"title": "Service execution example", "purpose": "How LegendApplication runs a Legend service, its dependencies and build"},
+    {"title": "Build and CI", "purpose": "Maven and npm builds, GitHub Actions workflows, JDK and Node versions"},
+    {"title": "Java 17 migration readiness", "purpose": "Compile target, plugin versions, snapshot dependencies and risks for moving the example to Java 17"},
+    {"title": "Showcases", "purpose": "How Pure showcases are compiled and tested"},
+    {"title": "Documentation site", "purpose": "Docusaurus site structure and publishing"}
+  ]
+}
