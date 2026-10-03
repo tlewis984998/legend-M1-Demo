@@ -1,0 +1,31 @@
+name: Check Service Execution Example
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "examples/service-execution-jar/**"
+      - ".github/workflows/check-service-execution-example.yml"
+  pull_request:
+    branches:
+      - "**"
+    paths:
+      - "examples/service-execution-jar/**"
+      - ".github/workflows/check-service-execution-example.yml"
+  workflow_dispatch: {}
+
+jobs:
+  test-service-execution-example:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: "17"
+          distribution: "temurin"
+          cache: "maven"
+      - name: Run test
+        working-directory: ./examples/service-execution-jar/legend-guided-tour-application
+        run: mvn -B -ntp clean verify
