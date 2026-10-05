@@ -11,7 +11,7 @@ This example demonstrates the creation and use of a Legend service execution lib
 
 - **JDK 17** (CI uses Eclipse Temurin 17; see
   [`.github/workflows/check-service-execution-example.yml`](../../.github/workflows/check-service-execution-example.yml)).
-- Maven 3.x.
+- Maven 3.6.3 or later.
 - Network access to Maven Central and `https://gitlab.com/api/v4/projects/38029096/packages/maven`.
 
 ## Build and test
@@ -42,8 +42,7 @@ Do not pass `-DskipTests`; the test is the end-to-end check of the service execu
 ## Run
 
 ```sh
-java -cp target/legend-guided-tour-application-0.0.1-SNAPSHOT-shaded.jar \
-  org.finos.legend.demo.app.LegendApplication
+java -jar target/legend-guided-tour-application-0.0.1-SNAPSHOT-shaded.jar
 ```
 
 `LegendApplication.main` executes the service but discards the result, so it prints no query

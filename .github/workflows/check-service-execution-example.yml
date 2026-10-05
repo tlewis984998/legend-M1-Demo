@@ -45,3 +45,10 @@ jobs:
           mvn -v
       - name: Build and test
         run: mvn -B -ntp clean verify -DskipTests=false -Dmaven.test.skip=false
+      - name: Verify Java 17 bytecode and executable jar
+        run: |
+          javap -verbose -classpath target/legend-guided-tour-application-0.0.1-SNAPSHOT.jar \
+            org.finos.legend.demo.app.LegendApplication | grep 'major version: 61'
+          javap -verbose -classpath target/legend-guided-tour-application-0.0.1-SNAPSHOT-shaded.jar \
+            org.finos.legend.demo.app.LegendApplication | grep 'major version: 61'
+          java -jar target/legend-guided-tour-application-0.0.1-SNAPSHOT-shaded.jar
