@@ -1,0 +1,53 @@
+name: Check Service Execution Example
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "examples/service-execution-jar/**"
+      - ".github/workflows/check-service-execution-example.yml"
+  pull_request:
+    branches:
+      - "**"
+    paths:
+      - "examples/service-execution-jar/**"
+      - ".github/workflows/check-service-execution-example.yml"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-service-execution-example:
+    name: Build and Test Service Execution Example (JDK 17)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: examples/service-execution-jar/legend-guided-tour-application
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+          cache: "maven"
+          cache-dependency-path: examples/service-execution-jar/legend-guided-tour-application/pom.xml
+      - name: Show Toolchain
+        run: java -version && mvn -version
+      - name: Build and Test
+        run: mvn -B -ntp clean verify
+      - name: Smoke Run Shaded Jar
+        run: java -jar target/legend-guided-tour-application-0.0.1-SNAPSHOT-shaded.jar
+      - name: Upload Surefire Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports
+          path: examples/service-execution-jar/legend-guided-tour-application/target/surefire-reports/
+          if-no-files-found: ignore
